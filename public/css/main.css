@@ -1,0 +1,35 @@
+.empty-list{
+    font-weight: bold;
+}
+.hide{
+    display: none;
+}
+.completed-true{
+    background-color: #ececec;
+}
+
+.completed-true .text{
+    text-decoration: line-through;
+}
+.hide-true{
+    display: none;
+}
+
+.active-panel .btn {
+    display: none;
+    margin: 4px;
+}
+
+.task:hover .active-panel .btn {
+    display: inline-block;
+}
+.edit.task:hover .view-task{
+    display: none;
+}
+
+.edit.task:hover .edit-task{
+    display: block;
+}
+.task .edit-task{
+    display: none;
+}
