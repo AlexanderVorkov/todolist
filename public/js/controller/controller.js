@@ -1,3 +1,18 @@
+define(['model/collection-tasks', 'model/user', 'view/tasks', 'view/add-task', 'view/edit-task']);
+
+var events = {
+    'TASKS_COMPLETED': 'tasks-completed',
+    'VIEW_TASK_UPDATE_TEXT': 'view-task-update-text',
+    'VIEW_REOPEN_TASK': 'view-reopen-task',
+    'VIEW_COMPLETED_TASK': 'view-completed-task',
+    'VIEW_DELETE_TASK': 'view-delete-task',
+    'TASK_ADDED': 'task-added',
+    'VIEW_ADD_TASK': 'view-add-task',
+    'ADD_TASKS': 'add-tasks',
+    'DELETED_TASK': 'deleted-task',
+    'TASK_TEXT_UPDATED': 'task-text-updated'
+}
+
 function ToDoListController() {
     this.currentUser;
     this.init();
@@ -6,24 +21,23 @@ function ToDoListController() {
 ToDoListController.prototype.init = function () {
     this.tasks = new CollectionTasks();
     this.viewTasks = new ViewTasks();
-    this.form = new ViewAddFormTodoList();
+    this.form = new ViewAddTask();
 
-    eventBus.on(events['add-tasks'], $.proxy(function (e, tasks) {
+    eventBus.on(events['ADD_TASKS'], $.proxy(function (e, tasks) {
         this.addTasks(tasks);
     }, this.tasks));
 
-    eventBus.on(events['view-add-task'], $.proxy(function (e, val) {
+    eventBus.on(events['VIEW_ADD_TASK'], $.proxy(function (e, val) {
         this.tasks.addTask({id: this.tasks.generateTaskId(), text: val, date: Date.now(), author: this.currentUser});
     }, this));
 
-    eventBus.on(events['task-added'], $.proxy(function (e, task) {
+    eventBus.on(events['TASK_ADDED'], $.proxy(function (e, task) {
         var _viewTask = $.extend({
-            viewDate: (new Date(task.date)).toDateString(),
             authorIsMe: task.author == this.currentUser}, task);
         this.viewTasks.renderTask(_viewTask);
     }, this));
 
-    eventBus.on(events['view-delete-task'], $.proxy(function (e, task_id, is_completed) {
+    eventBus.on(events['VIEW_DELETE_TASK'], $.proxy(function (e, task_id, is_completed) {
         var task = this.tasks.getTaskById(task_id);
         if (task.author == this.currentUser) {
             if (confirm("Are you sure you want to delete task")) {
@@ -32,33 +46,30 @@ ToDoListController.prototype.init = function () {
         }
     }, this));
 
-    eventBus.on(events['view-completed-task'], $.proxy(function (e, task_id, is_completed) {
+    eventBus.on(events['VIEW_COMPLETED_TASK'], $.proxy(function (e, task_id, is_completed) {
         this.tasks.completedTaskById(task_id, is_completed);
     }, this));
 
-    eventBus.on(events['view-reopen-task'], $.proxy(function (e, task_id, is_completed) {
+    eventBus.on(events['VIEW_REOPEN_TASK'], $.proxy(function (e, task_id, is_completed) {
         this.tasks.completedTaskById(task_id, is_completed);
     }, this));
 
-    eventBus.on(events['view-task-update-text'], $.proxy(function (e, val, task_id) {
+    eventBus.on(events['VIEW_TASK_UPDATE_TEXT'], $.proxy(function (e, val, task_id) {
         this.tasks.updateTextById(val, task_id);
         alert('task saved');
     }, this));
 
-    eventBus.on(events['tasks-completed'], $.proxy(function (e, task) {
+    eventBus.on(events['TASKS_COMPLETED'], $.proxy(function (e, task) {
         var _viewTask = $.extend({
-            viewDate: (new Date(task.date)).toDateString(),
             authorIsMe: task.author == this.currentUser}, task);
         this.viewTasks.renderTask(_viewTask);
     }, this));
-
-    //TODO: delete test
-    this.test();
 }
+
 //test
-ToDoListController.prototype.test = function () {
+ToDoListController.prototype.testData = function () {
     this.currentUser = new ModelCurrentUser('TestUser');
-    eventBus.trigger(events['add-tasks'], [
+    eventBus.trigger(events['ADD_TASKS'], [
         [
             {id: 1, text: 'test1', date: Date.now(), author: new ModelUser('Vasya')},
             {id: 2, text: 'test2', date: Date.now(), author: new ModelUser('Petya'), completed: true},
@@ -68,21 +79,3 @@ ToDoListController.prototype.test = function () {
         ]
     ]);
 }
-
-var toDoListController;
-var eventBus;
-var events = {
-    'tasks-completed': 'tasks-completed',
-    'view-task-update-text': 'view-task-update-text',
-    'view-reopen-task': 'view-reopen-task',
-    'view-completed-task': 'view-completed-task',
-    'view-delete-task': 'view-delete-task',
-    'task-added': 'task-added',
-    'view-add-task': 'view-add-task',
-    'add-tasks': 'add-tasks'
-}
-
-$(function () {
-    eventBus = $("body");
-    toDoListController = new ToDoListController();
-});

@@ -12,12 +12,12 @@ ModelTask.prototype.getCompleted = function () {
 
 ModelTask.prototype.setCompleted = function (is_completed) {
     this.completed = is_completed;
-    eventBus.trigger(events['tasks-completed'], [this]);
+    eventBus.trigger(events['TASKS_COMPLETED'], [this]);
 }
 
 ModelTask.prototype.setText = function(text){
     this.text = text;
-    eventBus.trigger('task-text-updated', [this]);
+    eventBus.trigger(events['TASK_TEXT_UPDATED'], [this]);
 }
 
 ModelTask.prototype.getId = function () {
@@ -26,5 +26,5 @@ ModelTask.prototype.getId = function () {
 
 
 ModelTask.prototype.destroy = function () {
-    eventBus.trigger("deleted-task", this.getId());
+    eventBus.trigger(events['DELETED_TASK'], this.getId());
 }

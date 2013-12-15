@@ -1,18 +1,19 @@
-function ViewAddFormTodoList() {
-    ViewAddFormTodoList.superproto.constructor.call(this, $('#addFormTodoList'));
+function ViewAddTask() {
+    ViewAddTask.superproto.constructor.call(this, $('#addFormTodoList'));
 }
+define(['view/abstract-form'],function(){
+    inherit(ViewAddTask, AbstractViewForm);
 
-inherit(ViewAddFormTodoList, AbstractViewForm);
-
-ViewAddFormTodoList.prototype.submitTaskHandler = function (e) {
-    var val = $.trim(this.textTask.val());
-    if (val != '') {
-        eventBus.trigger(events['view-add-task'], val);
-        this.clean();
+    ViewAddTask.prototype.submitTaskHandler = function (e) {
+        var val = $.trim(this.textTask.val());
+        if (val != '') {
+            eventBus.trigger(events['VIEW_ADD_TASK'], val);
+            this.clean();
+        }
     }
-}
 
-ViewAddFormTodoList.prototype.clean = function () {
-    this.textTask.val('');
-    this.submitTask.addClass('disabled');
-}
+    ViewAddTask.prototype.clean = function () {
+        this.textTask.val('');
+        this.submitTask.addClass('disabled');
+    }
+});

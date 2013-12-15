@@ -17,7 +17,6 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2" id="addFormTodoList">
             <div class="form-group">
-                <!--<label for="text">task text</label>-->
                 <textarea class="form-control" row="3" name="text" id="text" placeholder="enter text"></textarea>
             </div>
             <button type="submit" class="btn btn-primary disabled">add task</button>
@@ -31,7 +30,7 @@
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div id="tasksArea"></div>
+            <div id="tasksArea" class="tasks-list"></div>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -41,7 +40,7 @@
 <script type="text/template" id="taskTemplate">
     <div id="<%= id %>" class="completed-<%= completed %> task<% if(authorIsMe && !completed){%> edit<%} %>">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9 task-text">
                 <div class="view-task">
                     <b class="text"><%- text %></b>
                     <br/>
@@ -52,7 +51,7 @@
                 </div>
                 <div class="edit-task">
                     <textarea class="form-control" row="3" name="text" placeholder="enter text"><%- text %></textarea>
-                    <button type="submit" class="btn btn-primary">save</button>
+                    <button type="submit" class="btn btn-primary btn-save">save</button>
                 </div>
             </div>
             <div class="col-md-3 active-panel text-left">
@@ -76,24 +75,7 @@
     <div class="text-center empty-list">List is empty.</div>
 </script>
 
-<!-- js lib-->
-<script src="js/jquery-2.0.3.min.js"></script>
-<script src="js/underscore-min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 
-<!-- js lib-->
-<script src="js/util.js"></script>
-
-<!-- js main -->
-<script src="js/view/task.js"></script>
-<script src="js/view/empty-item.js"></script>
-<script src="js/view/tasks.js"></script>
-<script src="js/view/abstract-form.js"></script>
-<script src="js/view/add-task.js"></script>
-<script src="js/view/edit-task.js"></script>
-<script src="js/model/user.js"></script>
-<script src="js/model/task.js"></script>
-<script src="js/model/collection-tasks.js"></script>
-<script src="js/controller/controller.js"></script>
+<script data-main="js/main" src="js/lib/require.js"></script>
 </body>
 </html>

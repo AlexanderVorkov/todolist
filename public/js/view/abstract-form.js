@@ -18,4 +18,4 @@ AbstractViewForm.prototype._keyUpHandler = function (e) {
     }
 }
 
-AbstractViewForm.prototype.submitTaskHandler = function (e) {alert(2)}
+AbstractViewForm.prototype.submitTaskHandler = function (e) {}

@@ -1,3 +1,10 @@
+body{
+    background-color: #e5e5e5;
+}
+.tasks-list{
+    background-color: #fff;
+    border-radius: 10px;
+}
 .empty-list{
     font-weight: bold;
 }
@@ -6,6 +13,7 @@
 }
 .completed-true{
     background-color: #ececec;
+    border-radius: 10px;
 }
 
 .completed-true .text{
@@ -19,17 +27,25 @@
     display: none;
     margin: 4px;
 }
-
+.task .btn-save{
+    margin-top: 2px;
+}
+.task{
+    margin: 10px;
+    padding: 5px;
+    min-height: 100px;
+}
 .task:hover .active-panel .btn {
     display: inline-block;
 }
-.edit.task:hover .view-task{
+.edit.task .task-text:hover .view-task{
     display: none;
 }
 
-.edit.task:hover .edit-task{
+.edit.task .task-text:hover .edit-task{
     display: block;
 }
+
 .task .edit-task{
     display: none;
 }

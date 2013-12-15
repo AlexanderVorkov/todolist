@@ -1,4 +1,4 @@
-
+define(['view/task','view/empty-item']);
 function ViewTasks() {
     this.tasksArea = $('#tasksArea');
     this.tasks = [];

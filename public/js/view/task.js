@@ -1,7 +1,8 @@
 function ViewTask(task) {
     this.templates = _.template($("#taskTemplate").text());
     this.id = task.getId();
-    this.html = $(this.templates(task))
+    var viewTask = $.extend({viewDate: (new Date(task.date)).toDateString()},task);
+    this.html = $(this.templates(viewTask));
     this.addHandlers()
 }
 
@@ -20,24 +21,24 @@ ViewTask.prototype.addHandlers = function () {
     }, this);
 
     this.html.on('click', '[name=delete]', $.proxy(function () {
-        eventBus.trigger(events['view-delete-task'], [this.id]);
+        eventBus.trigger(events['VIEW_DELETE_TASK'], [this.id]);
     }, this))
     this.html.on('click', '[name=completed]', $.proxy(function () {
-        eventBus.trigger(events['view-completed-task'], [this.id, true]);
+        eventBus.trigger(events['VIEW_COMPLETED_TASK'], [this.id, true]);
     }, this))
     this.html.on('click', '[name=reopen]', $.proxy(function () {
-        eventBus.trigger(events['view-reopen-task'], [this.id, false]);
+        eventBus.trigger(events['VIEW_REOPEN_TASK'], [this.id, false]);
     }, this))
-    eventBus.on('deleted-task', deletedTaskHandlers);
-    eventBus.on(events['tasks-completed'], deletedTaskHandlers);
-    eventBus.on('task-text-updated', updateText);
+    eventBus.on(events['DELETED_TASK'], deletedTaskHandlers);
+    eventBus.on(events['TASKS_COMPLETED'], deletedTaskHandlers);
+    eventBus.on(events['TASK_TEXT_UPDATED'], updateText);
     new ViewEditTask(this.html);
 }
 
 ViewTask.prototype.destroy = function (deletedTaskHandlers, updateText) {
-    eventBus.off('deleted-task', deletedTaskHandlers);
-    eventBus.off(events['tasks-completed'], deletedTaskHandlers);
-    eventBus.off('task-text-updated', updateText);
+    eventBus.off(events['DELETED_TASK'], deletedTaskHandlers);
+    eventBus.off(events['TASKS_COMPLETED'], deletedTaskHandlers);
+    eventBus.off(events['TASK_TEXT_UPDATED'], updateText);
     this.html.off('click');
     this.html.remove();
 }

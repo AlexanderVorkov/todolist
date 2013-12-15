@@ -1,3 +1,4 @@
+define(['model/task']);
 function CollectionTasks() {
     this.tasks = [];
 }
@@ -5,7 +6,7 @@ function CollectionTasks() {
 CollectionTasks.prototype.addTask = function (task) {
     var _task = new ModelTask(task)
     this.tasks.push(_task);
-    eventBus.trigger(events['task-added'], [_task])
+    eventBus.trigger(events['TASK_ADDED'], [_task])
 }
 
 CollectionTasks.prototype.deleteTaskById = function (id) {
