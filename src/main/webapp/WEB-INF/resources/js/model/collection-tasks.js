@@ -1,13 +1,24 @@
 define(['model/task']);
+
 function CollectionTasks() {
     this.tasks = [];
 }
 
+CollectionTasks.prototype.getServerTasks = function(){
+    $.ajax({
+        url: '/tasks/0',
+        success:function(data){
+            console.log(data);
+            eventBus.trigger(events['ADD_TASKS'], [data]);
+        }
+    })
+}
+
 CollectionTasks.prototype.addTask = function (task) {
-    var _task = new ModelTask(task)
+    var _task = new ModelTask(task);
     this.tasks.push(_task);
     eventBus.trigger(events['TASK_ADDED'], [_task])
-}
+};
 
 CollectionTasks.prototype.deleteTaskById = function (id) {
     this.tasks = _.filter(this.tasks, function (task) {
@@ -17,7 +28,7 @@ CollectionTasks.prototype.deleteTaskById = function (id) {
         }
         return true
     })
-}
+};
 
 CollectionTasks.prototype.completedTaskById = function (id, is_completed) {
     var task = this.getTaskById(id);

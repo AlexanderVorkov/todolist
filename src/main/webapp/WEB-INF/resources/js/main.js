@@ -16,6 +16,6 @@ requirejs(['jquery', 'underscore', 'util', 'controller/controller'], function ()
     $(function () {
         eventBus = $("body");
         var toDoListController = new ToDoListController();
-        toDoListController.testData();
+        /*toDoListController.testData();*/
     });
 })

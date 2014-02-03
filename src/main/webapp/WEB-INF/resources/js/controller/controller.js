@@ -10,7 +10,8 @@ var events = {
     'VIEW_ADD_TASK': 'view-add-task',
     'ADD_TASKS': 'add-tasks',
     'DELETED_TASK': 'deleted-task',
-    'TASK_TEXT_UPDATED': 'task-text-updated'
+    'TASK_TEXT_UPDATED': 'task-text-updated',
+    'START_APP': 'START-APP'
 }
 
 function ToDoListController() {
@@ -22,6 +23,10 @@ ToDoListController.prototype.init = function () {
     this.tasks = new CollectionTasks();
     this.viewTasks = new ViewTasks();
     this.form = new ViewAddTask();
+
+    eventBus.on(events['START_APP'], $.proxy(function (e, tasks) {
+        this.getServerTasks();
+    }, this.tasks));
 
     eventBus.on(events['ADD_TASKS'], $.proxy(function (e, tasks) {
         this.addTasks(tasks);
@@ -64,6 +69,8 @@ ToDoListController.prototype.init = function () {
             authorIsMe: task.author == this.currentUser}, task);
         this.viewTasks.renderTask(_viewTask);
     }, this));
+
+    eventBus.trigger(events['START_APP']);
 }
 
 //test
