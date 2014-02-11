@@ -10,12 +10,9 @@ requirejs.config({
     }
 });
 
-var eventBus;
-
-requirejs(['jquery', 'underscore', 'util', 'controller/controller'], function () {
+requirejs(['jquery', 'underscore', 'util', 'controller/controller', 'controller/events'], function () {
     $(function () {
-        eventBus = $("body");
-        var toDoListController = new ToDoListController();
+        window.app = new ToDoListController();
         /*toDoListController.testData();*/
     });
-})
+});

@@ -5,4 +5,4 @@ function ViewEmptyItem() {
 
 ViewEmptyItem.prototype.getHtml = function () {
     return this.html;
-}
+};

@@ -8,14 +8,14 @@ function AbstractViewForm(el) {
 AbstractViewForm.prototype.addHandlers = function () {
     this.textTask.on('keyup', $.proxy(this._keyUpHandler, this));
     this.submitTask.click($.proxy(this.submitTaskHandler, this));
-}
+};
 
-AbstractViewForm.prototype._keyUpHandler = function (e) {
+AbstractViewForm.prototype._keyUpHandler = function () {
     if ($.trim(this.textTask.val()) != '') {
         this.submitTask.removeClass('disabled');
     } else {
         this.submitTask.addClass('disabled');
     }
-}
+};
 
-AbstractViewForm.prototype.submitTaskHandler = function (e) {}
+AbstractViewForm.prototype.submitTaskHandler = function (e) {};

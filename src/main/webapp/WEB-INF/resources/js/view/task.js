@@ -1,4 +1,5 @@
-function ViewTask(task) {
+function ViewTask(task, eventBus) {
+    this.eventBus = eventBus;
     this.templates = _.template($("#taskTemplate").text());
     this.id = task.getId();
     var viewTask = $.extend({viewDate: (new Date(task.date)).toDateString()},task);
@@ -21,32 +22,32 @@ ViewTask.prototype.addHandlers = function () {
     }, this);
 
     this.html.on('click', '[name=delete]', $.proxy(function () {
-        eventBus.trigger(events['VIEW_DELETE_TASK'], [this.id]);
-    }, this))
+        this.eventBus.trigger(events['VIEW_DELETE_TASK'], [this.id]);
+    }, this));
     this.html.on('click', '[name=completed]', $.proxy(function () {
-        eventBus.trigger(events['VIEW_COMPLETED_TASK'], [this.id, true]);
-    }, this))
+        this.eventBus.trigger(events['VIEW_COMPLETED_TASK'], [this.id, true]);
+    }, this));
     this.html.on('click', '[name=reopen]', $.proxy(function () {
-        eventBus.trigger(events['VIEW_REOPEN_TASK'], [this.id, false]);
-    }, this))
-    eventBus.on(events['DELETED_TASK'], deletedTaskHandlers);
-    eventBus.on(events['TASKS_COMPLETED'], deletedTaskHandlers);
-    eventBus.on(events['TASK_TEXT_UPDATED'], updateText);
+        this.eventBus.trigger(events['VIEW_REOPEN_TASK'], [this.id, false]);
+    }, this));
+    this.eventBus.on(events['DELETED_TASK'], deletedTaskHandlers);
+    this.eventBus.on(events['TASKS_COMPLETED'], deletedTaskHandlers);
+    this.eventBus.on(events['TASK_TEXT_UPDATED'], updateText);
     new ViewEditTask(this.html);
-}
+};
 
 ViewTask.prototype.destroy = function (deletedTaskHandlers, updateText) {
-    eventBus.off(events['DELETED_TASK'], deletedTaskHandlers);
-    eventBus.off(events['TASKS_COMPLETED'], deletedTaskHandlers);
-    eventBus.off(events['TASK_TEXT_UPDATED'], updateText);
+    this.eventBus.off(events['DELETED_TASK'], deletedTaskHandlers);
+    this.eventBus.off(events['TASKS_COMPLETED'], deletedTaskHandlers);
+    this.eventBus.off(events['TASK_TEXT_UPDATED'], updateText);
     this.html.off('click');
     this.html.remove();
-}
+};
 
 ViewTask.prototype.setText = function (text) {
     this.html.find('.text,[name=text]').html(text);
-}
+};
 
 ViewTask.prototype.getHtml = function () {
     return this.html;
-}
+};

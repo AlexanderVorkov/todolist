@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2" id="addFormTodoList">
             <div class="form-group">
-                <textarea class="form-control" row="3" name="text" id="text" placeholder="enter text"></textarea>
+                <textarea class="form-control" name="text" id="text" placeholder="enter text"></textarea>
             </div>
             <button type="submit" class="btn btn-primary disabled">add task</button>
         </div>
@@ -46,7 +46,7 @@
                     <br/>
                     <small><%= viewDate %></small>
                     <%if(!authorIsMe){%>
-                    <small><%= author.name %></small>
+                    <small><%= authorName %></small>
                     <%}%>
                 </div>
                 <div class="edit-task">
