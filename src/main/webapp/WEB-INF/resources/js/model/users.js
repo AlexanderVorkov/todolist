@@ -15,8 +15,8 @@ Users.prototype.getServerUsers = function(){
      },this)
      });*/
     this.users = {
-        "0": new ModelUser("test1", 0, true),
-        "1": new ModelUser("test2", 1, false)
+        "0": new User("test1", 0, true),
+        "1": new User("test2", 1, false)
     };
     this.currentUser = _.find(this.users, function (user) {
         return user.isOwner;

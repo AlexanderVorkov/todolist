@@ -24,7 +24,7 @@ ToDoListController.prototype.init = function () {
     }, this));
 
     this.eventBus.on(events['VIEW_ADD_TASK'], $.proxy(function (e, val) {
-        this.tasks.addTask({id: this.tasks.generateTaskId(), text: val, date: Date.now(), author: this.users.getCurrentUser()});
+        this.tasks.addTask({id: this.tasks.generateTaskId(), text: val, date: Date.now(), authorId: this.users.getCurrentUser().id});
     }, this));
 
     this.eventBus.on(events['TASK_ADDED'], $.proxy(function (e, task) {
@@ -65,17 +65,3 @@ ToDoListController.prototype.init = function () {
 
     this.eventBus.trigger(events['START_APP']);
 };
-
-/*
-//test
-ToDoListController.prototype.testData = function () {
-    eventBus.trigger(events['ADD_TASKS'], [
-        [
-            {id: 1, text: 'test1', date: Date.now(), author: new ModelUser('Vasya')},
-            {id: 2, text: 'test2', date: Date.now(), author: new ModelUser('Petya'), completed: true},
-            {id: 3, text: 'test3', date: Date.now(), author: this.users.getCurrentUser(), completed: false},
-            {id: 4, text: 'test4', date: Date.now(), author: new ModelUser('Vasy')},
-            {id: 5, text: 'test5', date: Date.now(), author: this.users.getCurrentUser(), completed: true}
-        ]
-    ]);
-}*/
