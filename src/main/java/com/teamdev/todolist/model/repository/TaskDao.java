@@ -24,6 +24,10 @@ public class TaskDao {
         localDB.put(0L, new Task(0L, "test text", false, 0L, 0L, "12.12.12"));
         localDB.put(1L, new Task(1L, "test text", false, 1L, 0L, "12.12.12"));
         localDB.put(2L, new Task(2L, "test text", false, 0L, 0L, "12.12.12"));
+
+        localDB.put(0L, new Task(0L, "test text", false, 0L, 1L, "12.12.12"));
+        localDB.put(1L, new Task(1L, "test text", false, 1L, 1L, "12.12.12"));
+        localDB.put(2L, new Task(2L, "test text", false, 0L, 1L, "12.12.12"));
     }
 
     public Task save(Task task){

@@ -17,18 +17,6 @@ public class TasksController {
     @Inject
     private TasksReader tasksReader;
 
-    @RequestMapping("/")
-    public String indexPage(){
-        return "index";
-    }
-
-    @ResponseBody
-    @RequestMapping("/tasks1/")
-    public List<TaskDto> tasks1(){
-        long assigneeId = 0L;
-        return tasksReader.readAllByAssignee(assigneeId);
-    }
-
     @ResponseBody
     @RequestMapping(value="/tasks/{assigneeid}", method = RequestMethod.GET)
     public List<TaskDto> tasks(@PathVariable long assigneeid){
